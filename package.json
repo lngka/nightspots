@@ -1,0 +1,28 @@
+{
+  "name": "nightspot",
+  "version": "1.0.0",
+  "description": "A local night life search & mark \"going\" app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lngka/nightspots.git"
+  },
+  "author": "lngka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lngka/nightspots/issues"
+  },
+  "homepage": "https://github.com/lngka/nightspots#readme",
+  "dependencies": {
+    "babel-eslint": "^8.0.0",
+    "dotenv": "^4.0.0",
+    "eslint": "^4.7.2",
+    "express": "^4.15.4",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.11.12"
+  }
+}

@@ -1,0 +1,6 @@
+.env
+data
+node_modules
+runMongod.bat
+mongod
+.eslintrc.json
