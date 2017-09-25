@@ -37,7 +37,7 @@ module.exports = function getYelpToken() {
                 var response =  JSON.parse(data);
                 if (response["access_token"]) {
                     process.env.YELP_TOKEN = response["access_token"];
-                    console.log("Got access_token from YELP: ");
+                    console.log("Saved access_token from YELP at process.env.YELP_TOKEN: ");
                     console.log(process.env.YELP_TOKEN);
                 } else {
                     console.log(data);

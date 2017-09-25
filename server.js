@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const handlebars = require("express-handlebars");
 const path = require("path");
-const getYelpToken = require("./app/common/getYelpToken.js");
+const getYelpToken = require("./app/common/get-yelp-token.js");
 
 // init environment variables
 require("dotenv").config();
@@ -23,16 +23,12 @@ app.engine("hbs", handlebars({"extname": "hbs", "layoutsDir": "./views/layouts",
 app.use("/public", express.static(path.join(process.cwd(), "public")));
 
 // get access token from YELP and save in process.env.YELP_TOKEN
-var token = getYelpToken();
-setTimeout(()=>{
-    console.log(process.env.YELP_TOKEN);
-}, 10000);
+getYelpToken();
 
 
 // routes config
-app.get("/", function(req, res) {
-    res.render("index");
-});
+require("./app/routes/index.js")(app);
+require("./app/routes/api.js")(app);
 
 // start, default PORT is 3000
 app.listen(process.env.PORT || 3000, function() {
