@@ -21,6 +21,7 @@ app.engine("hbs", handlebars({"extname": "hbs", "layoutsDir": "./views/layouts",
 
 // set public folder
 app.use("/public", express.static(path.join(process.cwd(), "public")));
+app.use("/app", express.static(path.join(process.cwd(), "app")));
 
 // get access token from YELP and save in process.env.YELP_TOKEN
 getYelpToken();
