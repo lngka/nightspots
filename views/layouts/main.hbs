@@ -9,10 +9,15 @@
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <!-- main css -->
     <link rel="stylesheet" href="/public/css/main.css">
+    <!-- additional css -->
+    {{#if css}}
+    <link rel="stylesheet" href={{css}}>
+    {{/if}}
   </head>
   <body>
-    {{{body}}}
-    
+      <div class="container">
+          {{{body}}}
+      </div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/public/js/jquery-3.2.1.min.js" ></script>
     <script src="/public/js/popper.min.js"></script>

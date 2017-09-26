@@ -1,3 +1,10 @@
 body {
-    background-color: green;
+    font-family: "Open Sans", sans-serif;
+    background-color: #7E57C2;
+}
+@font-face {
+    font-family: "Open Sans";
+    font-weight: 400;
+    font-style: normal;
+    src: url("/public/fonts/open_sans/OpenSans-Regular.ttf");
 }

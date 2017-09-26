@@ -1,5 +1,8 @@
 module.exports = function(app) {
     app.get("/", function(req, res) {
-        res.render("index");
+        var options = {
+            "css": "/public/css/index.css"
+        };
+        res.render("index", options);
     });
 };
