@@ -19,7 +19,11 @@ onDOMready(function() {
         console.log(url);
         // ajaxRequest(method, url, payload, callback)
         ajaxRequest("GET", url, {}, function(response) {
-            console.log(JSON.parse(response));
+            var result = JSON.parse(response);
+            var resultDiv = document.querySelector("#resultDiv");
+
+            // showSearchResult(parentDiv, businesses)
+            showSearchResult(resultDiv, result.businesses);
         });
     });
 });
