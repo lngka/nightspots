@@ -10,7 +10,7 @@ function ajaxRequest(method, url, payload, callback) {
         }
     };
 
+    // true for async
     xmlhttp.open(method, url, true);
-    xmlhttp.write(payload);
-    xmlhttp.send();
+    xmlhttp.send(payload);
 }
