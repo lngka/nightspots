@@ -21,7 +21,7 @@ onDOMready(function() {
         ajaxRequest("GET", url, {}, function(response) {
             var result = JSON.parse(response);
             var resultDiv = document.querySelector("#resultDiv");
-
+            console.log(result);
             // showSearchResult(parentDiv, businesses)
             showSearchResult(resultDiv, result.businesses);
         });
