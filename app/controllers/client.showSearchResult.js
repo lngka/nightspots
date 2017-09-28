@@ -17,8 +17,8 @@ function showSearchResult(parentDiv, businesses) {
 
 function newResultCard() {
     var cardBlock = newDOMElement("div", {"class": "card-block"});
-    var title = newDOMElement("h4", {"class": "card-title"});
-    var text = newDOMElement("p", {"class": "card-text"});
+    var title     = newDOMElement("h4", {"class" : "card-title"});
+    var text      = newDOMElement("p", {"class"  : "card-text"});
     cardBlock.appendChild(title);
     cardBlock.appendChild(text);
 
@@ -27,7 +27,7 @@ function newResultCard() {
     cardFooter.appendChild(footerText);
 
     var cardNode = newDOMElement("div", {"class": "card"});
-    var img = newDOMElement("img", {"class": "card-img-top", "src": "#", "alt": "business's pic"});
+    var img      = newDOMElement("img", {"class": "card-img-top", "src": "#", "alt": "business's pic"});
     cardNode.appendChild(img);
     cardNode.appendChild(cardBlock);
     cardNode.appendChild(cardFooter);

@@ -8,7 +8,10 @@ module.exports = function(app) {
             var options = {
                 "method": "GET",
                 "host": "api.yelp.com",
-                "path": "/v3/businesses/search" + "?location=" + encodeURIComponent(location),
+                "path": "/v3/businesses/search"
+                    + "?categories=" + "nightlife" // https://www.yelp.com/developers/documentation/v2/all_category_list
+                    + "&sort_by="    + "rating"    // best_match, rating, review_count or distance
+                    + "&location="   + encodeURIComponent(location),
                 "headers": {
                     "Authorization": "Bearer" + " " + process.env.YELP_TOKEN
                 }

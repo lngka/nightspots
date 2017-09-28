@@ -1,8 +1,8 @@
 "use strict";
-const express = require("express");
-const mongoose = require("mongoose");
-const handlebars = require("express-handlebars");
-const path = require("path");
+const express      = require("express");
+const mongoose     = require("mongoose");
+const handlebars   = require("express-handlebars");
+const path         = require("path");
 const getYelpToken = require("./app/common/get-yelp-token.js");
 
 // init environment variables
