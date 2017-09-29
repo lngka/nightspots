@@ -11,6 +11,7 @@ module.exports = function(app) {
         if (location && review_for) {
             res.status(400).send("Request must specify either a location OR review_for={id} as url query. Not both.");
         }
+        
         if (review_for) {
             var getreview_options = {
                 "method": "GET",
