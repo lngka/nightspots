@@ -3,6 +3,7 @@ module.exports = function(app) {
     app.get("/api/search", function(req, res) {
         var location = req.query.location;
         var review_for =  req.query.review_for;
+        var withReview = Boolean(req.query.withReview);
 
         if (!location && !review_for) {
             res.status(400).send("Request must specify either a location or review_for={id} as url query");
@@ -11,8 +12,8 @@ module.exports = function(app) {
         if (location && review_for) {
             res.status(400).send("Request must specify either a location OR review_for={id} as url query. Not both.");
         }
-        
-        if (review_for) {
+
+        if (review_for && !location) {
             var getreview_options = {
                 "method": "GET",
                 "host": "api.yelp.com",
@@ -37,7 +38,7 @@ module.exports = function(app) {
             reqReviewByID.end();
         }
 
-        if (location) {
+        if (location && !review_for) {
             var getbusiness_options = {
                 "method": "GET",
                 "host": "api.yelp.com",
@@ -65,4 +66,6 @@ module.exports = function(app) {
             reqBusinessByLocation.end();
         }
     });
+
+    app.get("/api/")
 };

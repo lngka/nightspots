@@ -23,10 +23,6 @@ app.engine("hbs", handlebars({"extname": "hbs", "layoutsDir": "./views/layouts",
 app.use("/public", express.static(path.join(process.cwd(), "public")));
 app.use("/app", express.static(path.join(process.cwd(), "app")));
 
-// get access token from YELP and save in process.env.YELP_TOKEN
-getYelpToken();
-
-
 // routes config
 require("./app/routes/index.js")(app);
 require("./app/routes/api.js")(app);
@@ -34,4 +30,7 @@ require("./app/routes/api.js")(app);
 // start, default PORT is 3000
 app.listen(process.env.PORT || 3000, function() {
     console.log("Listening on " + process.env.PORT || 3000);
+    
+    // get access token from YELP and save in process.env.YELP_TOKEN
+    getYelpToken();
 });
