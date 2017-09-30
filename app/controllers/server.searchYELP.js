@@ -1,7 +1,11 @@
 "use strict";
 const https = require("https");
 /*
-*
+* use this function to query for businesses based on location
+* @param location {string}: a geographic location
+* @param callback {function}: will be passed 2 parameters (err, businesses)
+    @callback-arguments err {Error} : error object with a message
+    @callback-arguments businesses {array}: an array of businesses returned from YELP
 */
 
 module.exports = function searchYELPbyLocation(location, callback) {
@@ -29,11 +33,12 @@ module.exports = function searchYELPbyLocation(location, callback) {
             // YELP sometime returns a JSON with a "error" key
             // {"error":{"code": "SOME_ERROR", "description": "SOME_ERROR_DESCRIPTION"}}
             if (data.error) {
-                var yelpError = new Error(data.error.code + ": " + data.error.description);
-                return callback(yelpError);
+                var yelpError = new Error(data.error.description);
+                yelpError.code = data.error.code;
+                return callback(yelpError, null);
             } else if (!data.businesses) {
                 var error = new Error("Couldn't fetch businesses from YELP");
-                return callback(error);
+                return callback(error, null);
             } else {
                 return callback(null, data.businesses);
             }

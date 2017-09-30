@@ -1,9 +1,11 @@
 const https = require("https");
+const path = require("path");
+const searchYELPbyLocation = require(path.join(process.cwd(), "app/controllers/server.searchYELP.js"));
 module.exports = function(app) {
     app.get("/api/search", function(req, res) {
         var location = req.query.location;
         var review_for =  req.query.review_for;
-        var withReview = Boolean(req.query.withReview);
+        // var withReview = Boolean(req.query.withReview);
 
         if (!location && !review_for) {
             res.status(400).send("Request must specify either a location or review_for={id} as url query");
@@ -39,33 +41,17 @@ module.exports = function(app) {
         }
 
         if (location && !review_for) {
-            var getbusiness_options = {
-                "method": "GET",
-                "host": "api.yelp.com",
-                "path": "/v3/businesses/search"
-                    + "?categories=" + "nightlife" // https://www.yelp.com/developers/documentation/v2/all_category_list
-                    + "&sort_by="    + "rating"    // best_match, rating, review_count or distance
-                    + "&location="   + encodeURIComponent(location),
-                "headers": {
-                    "Authorization": "Bearer" + " " + process.env.YELP_TOKEN
+            searchYELPbyLocation(location, function(err, businesses){
+                if (err) {
+                    console.log(err);
+                    var errorJSON = {"code": err.code, "description": err.message};
+                    res.status(500).json(errorJSON);
+                } else {
+                    // return a json because other routes do
+                    res.json({"businesses": businesses});
                 }
-            };
-
-            var reqBusinessByLocation = https.request(getbusiness_options, function(response) {
-                // collect data asyncly
-                response.setEncoding("utf8");
-                var data = "";
-                response.on("data", function (chunk) {
-                    data += chunk;
-                });
-                response.on("end", function() {
-                    res.send(data);
-                });
             });
-
-            reqBusinessByLocation.end();
         }
     });
 
-    app.get("/api/")
 };
