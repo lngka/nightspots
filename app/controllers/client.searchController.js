@@ -45,13 +45,13 @@ onDOMready(function() {
         // ajaxRequest(method, url, payload, callback)
         ajaxRequest("GET", url, {}, function(response) {
             response = JSON.parse(response);
+            console.log(response);
             if (response.error) {
                 var err = new Error(response.error.description);
                 return callback(err);
             } else {
                 return callback(null, response.businesses);
             }
-
         });
     }
 });

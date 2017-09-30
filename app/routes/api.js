@@ -1,6 +1,7 @@
-const https = require("https");
 const path = require("path");
 const searchYELPbyLocation = require(path.join(process.cwd(), "app/controllers/server.searchYELP.js"));
+const searchReviewsByID = require(path.join(process.cwd(), "app/controllers/server.searchReviews.js"));
+
 module.exports = function(app) {
     app.get("/api/search", function(req, res) {
         var location = req.query.location;
@@ -16,28 +17,20 @@ module.exports = function(app) {
         }
 
         if (review_for && !location) {
-            var getreview_options = {
-                "method": "GET",
-                "host": "api.yelp.com",
-                "path": "/v3/businesses/" + review_for + "/reviews",
-                "headers": {
-                    "Authorization": "Bearer" + " " + process.env.YELP_TOKEN
+            var id = review_for;
+            searchReviewsByID(id, function(err, reviews) {
+                if (err) {
+                    var errorJSON = {
+                        "error": {
+                            "code": err.code,
+                            "description": err.message
+                        }
+                    };
+                    return res.status(500).json(errorJSON);
+                } else {
+                    res.status(200).json({"reviews": reviews});
                 }
-            };
-
-            var reqReviewByID = https.request(getreview_options, function(response) {
-                // collect data asyncly
-                response.setEncoding("utf8");
-                var data = "";
-                response.on("data", function (chunk) {
-                    data += chunk;
-                });
-                response.on("end", function() {
-                    res.send(data);
-                });
             });
-
-            reqReviewByID.end();
         }
 
         if (location && !review_for) {

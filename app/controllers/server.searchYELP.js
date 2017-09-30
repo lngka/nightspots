@@ -7,7 +7,6 @@ const https = require("https");
     @callback-arguments err {Error} : error object with a message
     @callback-arguments businesses {array}: an array of businesses returned from YELP
 */
-
 module.exports = function searchYELPbyLocation(location, callback) {
     var getbusiness_options = {
         "method": "GET",
@@ -36,7 +35,9 @@ module.exports = function searchYELPbyLocation(location, callback) {
                 var yelpError = new Error(data.error.description);
                 yelpError.code = data.error.code;
                 return callback(yelpError, null);
-            } else if (!data.businesses) {
+            }
+            // if success, YELP return {"businesses": <array of businesses>}
+            if (!data.businesses) {
                 var error = new Error("Couldn't fetch businesses from YELP");
                 return callback(error, null);
             } else {
