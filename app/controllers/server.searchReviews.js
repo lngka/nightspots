@@ -11,22 +11,28 @@ module.exports = function searchReviewsByID(id, callback) {
     var getreview_options = {
         "method": "GET",
         "host": "api.yelp.com",
-        "path": "/v3/businesses/" + id + "/reviews",
+        "path": "/v3/businesses/" + encodeURIComponent(id) + "/reviews",
         "headers": {
             "Authorization": "Bearer" + " " + process.env.YELP_TOKEN
         }
     };
 
     var reqReviewByID = https.request(getreview_options, function(response) {
+        var data = "";
+
         // collect data asyncly
         response.setEncoding("utf8");
-        var data = "";
         response.on("data", function (chunk) {
             data += chunk;
         });
 
         response.on("end", function() {
-            data = JSON.parse(data);
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                e.message = "YELP gave invalid JSON for id=" + id + ": " + e.message;
+                return callback(e, data);
+            }
             // YELP sometime returns a JSON with a "error" key
             // {"error":{"code": "SOME_ERROR", "description": "SOME_ERROR_DESCRIPTION"}}
             if (data.error) {

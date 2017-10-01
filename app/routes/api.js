@@ -1,12 +1,13 @@
 const path = require("path");
 const searchYELPbyLocation = require(path.join(process.cwd(), "app/controllers/server.searchYELP.js"));
 const searchReviewsByID = require(path.join(process.cwd(), "app/controllers/server.searchReviews.js"));
+const searchYELPwithReviews = require(path.join(process.cwd(), "app/controllers/server.searchYELPwithReviews.js"));
 
 module.exports = function(app) {
     app.get("/api/search", function(req, res) {
         var location = req.query.location;
         var review_for =  req.query.review_for;
-        // var withReview = Boolean(req.query.withReview);
+        var withReview = Boolean(req.query.withReview);
 
         if (!location && !review_for) {
             res.status(400).send("Request must specify either a location or review_for={id} as url query");
@@ -16,7 +17,7 @@ module.exports = function(app) {
             res.status(400).send("Request must specify either a location OR review_for={id} as url query. Not both.");
         }
 
-        if (review_for && !location) {
+        if (review_for) {
             var id = review_for;
             searchReviewsByID(id, function(err, reviews) {
                 if (err) {
@@ -33,7 +34,7 @@ module.exports = function(app) {
             });
         }
 
-        if (location && !review_for) {
+        if (location && !withReview) {
             searchYELPbyLocation(location, function(err, businesses){
                 if (err) {
                     console.log(err);
@@ -42,6 +43,16 @@ module.exports = function(app) {
                 } else {
                     // return a json because other routes do
                     res.json({"businesses": businesses});
+                }
+            });
+        }
+
+        if(location && withReview) {
+            searchYELPwithReviews(location, function(err, businesses) {
+                if (err) {
+                    return res.status(500).json({"error": err.message});
+                } else {
+                    return res.status(200).json({"businesses": businesses});
                 }
             });
         }

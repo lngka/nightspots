@@ -15,7 +15,7 @@ onDOMready(function() {
 
         findBusinessesByLocation(location, function(err, businesses) {
             if (err) {
-                return alert(err);
+                return alert(err.message);
             }
 
             var resultDiv = document.querySelector("#resultDiv");
@@ -42,13 +42,17 @@ onDOMready(function() {
     function findBusinessesByLocation(location, callback) {
         var url = window.location.href + "api/search?location=" + encodeURIComponent(location);
 
+        // to include reviews in the result add parameter "withReview" to the query
+        url += "&withReview=true";
+
         // ajaxRequest(method, url, payload, callback)
         ajaxRequest("GET", url, {}, function(response) {
             response = JSON.parse(response);
             console.log(response);
+            // in case of error, server replies with {"error":{"code": "foobar", "description": "barbaz"}}
             if (response.error) {
-                var err = new Error(response.error.description);
-                return callback(err);
+                var err = new Error(response.error);
+                return callback(err, null);
             } else {
                 return callback(null, response.businesses);
             }
