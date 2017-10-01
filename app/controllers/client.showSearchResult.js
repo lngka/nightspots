@@ -1,7 +1,8 @@
 "use strict";
 /*eslint-disable no-unused-vars*/
 /*
-* function to update search result on index.hbs
+* function to render search result on index.hbs
+* also render the goingButton
 * @param parentDiv {object}: a DOM element which contains result
 * @param businesses {array}: a array of objects representing businesses returned from YELP
 */
@@ -13,6 +14,10 @@ function showSearchResult(parentDiv, businesses) {
         card.title.innerHTML = business.name;
         card.anchor_on_img.href = business.url;
         card.anchor_on_title.href = business.url;
+
+        // remember the business ID on each button
+        // button is a styled <a>
+        card.goingButton.setAttribute("yelpID", business.id);
 
         // adding content: reviews, if possible
         if (business.reviews.length) {
@@ -26,6 +31,20 @@ function showSearchResult(parentDiv, businesses) {
     });
 }
 
+/*
+* function to create a card element to ccontain search results
+* @return retObj {object}: a object points to the created card and its child-elements
+*/
+// <div class="card">
+//     <img class="card-img-top" src="" alt="Card image cap">
+//     <div class="card-block">
+//         <h4 class="card-title">Card title</h4>
+//         <p class="card-text">txtextext</p>
+//     </div>
+//     <div class="card-footer">
+//         <small class="text-muted">textextext</small>
+//     </div>
+// </div>
 function newResultCard() {
     var cardBlock = newDOMElement("div", {"class": "card-block"});
     var title     = newDOMElement("a", {"class": "card-title", "href": "#"});
@@ -41,8 +60,8 @@ function newResultCard() {
     anchor_on_img.appendChild(img);
 
     var cardFooter = newDOMElement("div", {"class": "card-footer"});
-    var footerText = newDOMElement("small", {"class": "text-muted"});
-    var goingButton = newDOMElement("button", {"class": "btn btn-success"});
+    var footerText = newDOMElement("small");
+    var goingButton = newDOMElement("a", {"class": "btn btn-success btn-going"});// element with btn-going will be impemented with script
     goingButton.innerHTML = "0 Going";
     footerText.appendChild(goingButton);
     cardFooter.appendChild(footerText);
@@ -60,28 +79,31 @@ function newResultCard() {
         "title": title,
         "anchor_on_title": title, // styling reason, title is already an anchor
         "text": text,
-        "footerText": footerText
+        "footerText": footerText,
+        "goingButton": goingButton
     };
     return retObj;
 }
-// newResultCard output this :
-// <div class="card">
-//     <img class="card-img-top" src="" alt="Card image cap">
-//     <div class="card-block">
-//         <h4 class="card-title">Card title</h4>
-//         <p class="card-text">txtextext</p>
-//     </div>
-//     <div class="card-footer">
-//         <small class="text-muted">textextext</small>
-//     </div>
-// </div>
+
+/*
+* use this function to create any DOM element and set its attributes
+* @param type {string}: a string representing a html tag, for example: "html", "p", "img"
+* @param attributes {object}: attributes, if any, to be set on the element
+* @return el {object}: the created DOM object
+*/
 function newDOMElement(type, attributes) {
+    if(!type) {
+        var err = new Error("Couldn't create DOM element");
+        throw err;
+    }
     var el = document.createElement(type);
-    for (var key in attributes) {
-        if (key == "class") {
-            el.className = attributes[key];
-        } else {
-            el[key] = attributes[key];
+    if (attributes) {
+        for (var key in attributes) {
+            if (key == "class") {
+                el.className = attributes[key];
+            } else {
+                el[key] = attributes[key];
+            }
         }
     }
     return el;
