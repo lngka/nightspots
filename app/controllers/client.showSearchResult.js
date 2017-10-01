@@ -35,13 +35,17 @@ function newResultCard() {
     cardBlock.appendChild(hr);
     cardBlock.appendChild(text);
 
-    var cardFooter = newDOMElement("div", {"class": "card-footer"});
-    var footerText = newDOMElement("small", {"class": "text-muted"});
-    cardFooter.appendChild(footerText);
 
     var img      = newDOMElement("img", {"class": "card-img-top", "src": "#", "alt": "business's pic"});
     var anchor_on_img = newDOMElement("a", {"href": "#"});
     anchor_on_img.appendChild(img);
+
+    var cardFooter = newDOMElement("div", {"class": "card-footer"});
+    var footerText = newDOMElement("small", {"class": "text-muted"});
+    var goingButton = newDOMElement("button", {"class": "btn btn-success"});
+    goingButton.innerHTML = "0 Going";
+    footerText.appendChild(goingButton);
+    cardFooter.appendChild(footerText);
 
     var cardNode = newDOMElement("div", {"class": "card"});
     cardNode.appendChild(anchor_on_img);
