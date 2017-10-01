@@ -7,7 +7,8 @@ onDOMready(function() {
     submitBtn.addEventListener("click", function(event) {
         event.preventDefault();
 
-        // get user input
+        //"searchForm", "searchField"
+        // are ids of a <form> and a <input>, check index.hbs for more
         var location = document.forms.searchForm.searchField.value;
         if (!location) {
             return alert("Please specify a location");
@@ -22,6 +23,7 @@ onDOMready(function() {
             // showSearchResult(parentDiv, businesses)
             loadingScreen(resultDiv);
             showSearchResult(resultDiv, businesses);
+            initiateGoingButtons();
         });
     });
 
@@ -47,7 +49,6 @@ onDOMready(function() {
 
         // ajaxRequest(method, url, payload, callback)
         ajaxRequest("GET", url, {}, function(response) {
-
             try {
                 response = JSON.parse(response);
                 console.log(response);

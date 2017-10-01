@@ -17,7 +17,7 @@ function showSearchResult(parentDiv, businesses) {
 
         // remember the business ID on each button
         // button is a styled <a>
-        card.goingButton.setAttribute("yelpID", business.id);
+        card.goingButton.setAttribute("yelpid", business.id);
 
         // adding content: reviews, if possible
         if (business.reviews.length) {

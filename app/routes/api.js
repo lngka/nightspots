@@ -58,4 +58,12 @@ module.exports = function(app) {
         }
     });
 
+    app.get("/api/goingcount", function(req, res) {
+        var yelpid = req.query.yelpid;
+        if (!yelpid) {
+            return res.status(400).send("Request must specify a yelpid in query");
+        } else {
+            return res.status(200).send("Hi, " + yelpid);
+        }
+    });
 };
