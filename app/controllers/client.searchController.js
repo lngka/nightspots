@@ -40,15 +40,21 @@ onDOMready(function() {
     *   @callback-argument response.businesses {array}: an array of objects containing info about businesses near location
     */
     function findBusinessesByLocation(location, callback) {
-        var url = window.location.href + "api/search?location=" + encodeURIComponent(location);
+        var url = window.location.origin + "/api/search?location=" + encodeURIComponent(location);
 
         // to include reviews in the result add parameter "withReview" to the query
         url += "&withReview=true";
 
         // ajaxRequest(method, url, payload, callback)
         ajaxRequest("GET", url, {}, function(response) {
-            response = JSON.parse(response);
-            console.log(response);
+
+            try {
+                response = JSON.parse(response);
+                console.log(response);
+            } catch (e) {
+                console.log(response);
+                return callback(e, null);
+            }
             // in case of error, server replies with {"error":{"code": "foobar", "description": "barbaz"}}
             if (response.error) {
                 var err = new Error(response.error);

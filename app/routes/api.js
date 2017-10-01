@@ -7,7 +7,7 @@ module.exports = function(app) {
     app.get("/api/search", function(req, res) {
         var location = req.query.location;
         var review_for =  req.query.review_for;
-        var withReview = Boolean(req.query.withReview);
+        var withReview = (req.query.withReview == "true") ? true : false;
 
         if (!location && !review_for) {
             res.status(400).send("Request must specify either a location or review_for={id} as url query");

@@ -8,9 +8,13 @@
 function showSearchResult(parentDiv, businesses) {
     businesses.forEach(function(business) {
         var card = newResultCard();
+        // adding content: basic info
         card.img.src = business.image_url;
         card.title.innerHTML = business.name;
+        card.anchor_on_img.href = business.url;
+        card.anchor_on_title.href = business.url;
 
+        // adding content: reviews, if possible
         if (business.reviews.length) {
             // business.reviews = [{"url": "someurl", "text": "sometext"}, {...}, {...}]
             card.text.innerHTML = business.reviews[0].text;
@@ -24,18 +28,23 @@ function showSearchResult(parentDiv, businesses) {
 
 function newResultCard() {
     var cardBlock = newDOMElement("div", {"class": "card-block"});
-    var title     = newDOMElement("h4", {"class": "card-title"});
+    var title     = newDOMElement("a", {"class": "card-title", "href": "#"});
+    var hr        = newDOMElement("hr");
     var text      = newDOMElement("p", {"class": "card-text"});
     cardBlock.appendChild(title);
+    cardBlock.appendChild(hr);
     cardBlock.appendChild(text);
 
     var cardFooter = newDOMElement("div", {"class": "card-footer"});
     var footerText = newDOMElement("small", {"class": "text-muted"});
     cardFooter.appendChild(footerText);
 
-    var cardNode = newDOMElement("div", {"class": "card"});
     var img      = newDOMElement("img", {"class": "card-img-top", "src": "#", "alt": "business's pic"});
-    cardNode.appendChild(img);
+    var anchor_on_img = newDOMElement("a", {"href": "#"});
+    anchor_on_img.appendChild(img);
+
+    var cardNode = newDOMElement("div", {"class": "card"});
+    cardNode.appendChild(anchor_on_img);
     cardNode.appendChild(cardBlock);
     cardNode.appendChild(cardFooter);
 
@@ -43,7 +52,9 @@ function newResultCard() {
     var retObj = {
         "cardNode": cardNode,
         "img": img,
+        "anchor_on_img": anchor_on_img,
         "title": title,
+        "anchor_on_title": title, // styling reason, title is already an anchor
         "text": text,
         "footerText": footerText
     };

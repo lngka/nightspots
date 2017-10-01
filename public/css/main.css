@@ -1,6 +1,12 @@
 body {
     font-family: "Open Sans", sans-serif;
-    background-color: #7E57C2;
+    background-color: #3c2e3d;
+}
+.card-title {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    margin: auto;
 }
 @font-face {
     font-family: "Open Sans";
