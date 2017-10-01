@@ -10,15 +10,22 @@ function showSearchResult(parentDiv, businesses) {
         var card = newResultCard();
         card.img.src = business.image_url;
         card.title.innerHTML = business.name;
+
+        if (business.reviews.length) {
+            // business.reviews = [{"url": "someurl", "text": "sometext"}, {...}, {...}]
+            card.text.innerHTML = business.reviews[0].text;
+        } else {
+            card.text.innerHTML = "[Review Unavailable]";
+        }
+
         parentDiv.appendChild(card.cardNode);
     });
-    return;
 }
 
 function newResultCard() {
     var cardBlock = newDOMElement("div", {"class": "card-block"});
-    var title     = newDOMElement("h4", {"class" : "card-title"});
-    var text      = newDOMElement("p", {"class"  : "card-text"});
+    var title     = newDOMElement("h4", {"class": "card-title"});
+    var text      = newDOMElement("p", {"class": "card-text"});
     cardBlock.appendChild(title);
     cardBlock.appendChild(text);
 
@@ -47,10 +54,10 @@ function newResultCard() {
 //     <img class="card-img-top" src="" alt="Card image cap">
 //     <div class="card-block">
 //         <h4 class="card-title">Card title</h4>
-//         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+//         <p class="card-text">txtextext</p>
 //     </div>
 //     <div class="card-footer">
-//         <small class="text-muted">0 are going</small>
+//         <small class="text-muted">textextext</small>
 //     </div>
 // </div>
 function newDOMElement(type, attributes) {

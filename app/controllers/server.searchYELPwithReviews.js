@@ -37,7 +37,6 @@ module.exports = function searchYELPwithReviews(location, callback) {
                 if (callback_count == businessesTotal) {
                     return callback(null, businesses);
                 }
-
             });
         });
     });
