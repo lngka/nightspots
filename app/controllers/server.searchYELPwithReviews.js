@@ -22,8 +22,13 @@ module.exports = function searchYELPwithReviews(location, callback) {
         businesses.forEach(function(business) {
             searchReviewsByID(business.id, function(err, reviews) {
                 if (err) {
-                    console.log(err);
-                    business.reviews = {"error": err};
+                    // contiue counting callbacks even if err exists
+                    business.reviews = {
+                        "error": {
+                            "code": "NO_YELP_REVIEWS",
+                            "description": err.message
+                        }
+                    };
                 } else {
                     business.reviews = reviews;
                 }
