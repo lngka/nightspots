@@ -4,6 +4,7 @@ const mongoose     = require("mongoose");
 const handlebars   = require("express-handlebars");
 const path         = require("path");
 const getYelpToken = require("./app/common/get-yelp-token.js");
+const passport = require("passport");
 
 // init environment variables
 require("dotenv").config();
@@ -26,11 +27,13 @@ app.use("/app", express.static(path.join(process.cwd(), "app")));
 // routes config
 require("./app/routes/index.js")(app);
 require("./app/routes/api.js")(app);
+require("./app/routes/auth.js")(app);
+
 
 // start, default PORT is 3000
 app.listen(process.env.PORT || 3000, function() {
     console.log("Listening on " + process.env.PORT || 3000);
-    
+
     // get access token from YELP and save in process.env.YELP_TOKEN
     getYelpToken();
 });
