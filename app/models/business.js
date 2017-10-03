@@ -12,6 +12,10 @@ const mySchema = new Schema({
     "going": {
         "type": Array,
         "default": []
+    },
+    "goingCount": {
+        "type": Number,
+        "default": 0
     }
 });
 

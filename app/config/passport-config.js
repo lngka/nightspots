@@ -10,9 +10,6 @@ module.exports = function configurePassport(passport) {
         "callbackURL": path.join(process.env.APP_URL, "/auth/twitter/callback")
     },
     function(token, tokenSecret, profile, done) {
-        console.log("token", token);
-        console.log("tokenSecret", tokenSecret);
-        console.log(profile);
         var newUser = {
             "twitter": {
                 "twitterID": profile.id,
