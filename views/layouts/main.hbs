@@ -19,11 +19,15 @@
       {{#if user}}
       <!-- store user ID here, client js find this to know if user's logged in -->
       <div id="user" class="hidden">{{user.userID}}</div>
+      <div id="lastSearchedLocation" class="hidden">{{user.lastSearchedLocation}}</div>
       {{/if}}
+
+      <!-- body goes here -->
       <div class="container">
           <a href="/auth/twitter" class="btn btn-info">Auth/Twitter</a>
           {{{body}}}
       </div>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/public/js/jquery-3.2.1.min.js"></script>
     <script src="/public/js/popper.min.js"></script>
