@@ -9,7 +9,11 @@ const mySchema = new Schema({
         "twitterID": {
             "type": String,
             "unique": true
-        }
+        },
+        "displayName": String,
+        "token": String,
+        "tokenSecret": String,
+        "accessLevel": String
     }
 });
 
