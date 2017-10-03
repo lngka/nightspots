@@ -1,10 +1,10 @@
 const path = require("path");
-const Business = require(path.join(process.cwd(), "app/models/business.js"));
 const searchYELPbyLocation  = require(path.join(process.cwd(), "app/controllers/server.searchYELP.js"));
 const searchReviewsByID     = require(path.join(process.cwd(), "app/controllers/server.searchReviews.js"));
 const searchYELPwithReviews = require(path.join(process.cwd(), "app/controllers/server.searchYELPwithReviews.js"));
 const ensureAuthenticated   = require(path.join(process.cwd(), "app/common/ensure-authenticated.js"));
 const goingCountByID        = require(path.join(process.cwd(), "app/controllers/server.goingCountByID.js"));
+const addGoingCountByUserID   = require(path.join(process.cwd(), "app/controllers/server.addGoingCountByUserID.js"));
 
 module.exports = function(app) {
     app.get("/api/search", function(req, res) {
@@ -77,7 +77,11 @@ module.exports = function(app) {
     });
 
     app.post("/api/metoo", ensureAuthenticated, function(req, res) {
-        console.log(req.body.yelpID);
-        res.status(200).send("you too");
+        var yelpID = req.body.yelpID;
+        var userID = req.user.id;
+        addGoingCountByUserID(userID, yelpID, function(err, doc) {
+            if (err) return res.status(500).send(err.message);
+            res.status(200).json(doc);
+        });
     });
 };
