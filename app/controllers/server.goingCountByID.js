@@ -10,7 +10,6 @@ module.exports = function(yelpID, callback) {
     } else {
         Business.findOne({"yelpID": yelpID}, "goingCount yelpID", function(err, doc) {
             if (err) return callback(err, null);
-            console.log(doc);
             if (doc) {
                 return callback(null, doc);
             } else { // create if not found
