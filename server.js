@@ -5,6 +5,7 @@ const handlebars   = require("express-handlebars");
 const path         = require("path");
 const getYelpToken = require("./app/common/get-yelp-token.js");
 const cookieParser = require("cookie-parser");
+const bodyParser   = require("body-parser");
 const session      = require("express-session");
 const passport     = require("passport");
 
@@ -25,6 +26,9 @@ app.engine("hbs", handlebars({"extname": "hbs", "layoutsDir": "./views/layouts",
 // set public folder
 app.use("/public", express.static(path.join(process.cwd(), "public")));
 app.use("/app", express.static(path.join(process.cwd(), "app")));
+
+// parse JSON through POST request
+app.use(bodyParser.json());
 
 // init cookie parser and session
 app.use(cookieParser("sup2erdu21per1836&secret"));

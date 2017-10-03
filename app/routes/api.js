@@ -75,4 +75,9 @@ module.exports = function(app) {
             });
         }
     });
+
+    app.post("/api/metoo", ensureAuthenticated, function(req, res) {
+        console.log(req.body.yelpID);
+        res.status(200).send("you too");
+    });
 };

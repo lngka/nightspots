@@ -3,6 +3,6 @@ module.exports = function(req, res, next) {
     if (req.isAuthenticated()) {
         next();
     } else {
-        res.redirect("/auth/twitter");
+        res.status(401).send("Logged in browser session required");
     }
 };

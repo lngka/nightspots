@@ -19,6 +19,7 @@
   "homepage": "https://github.com/lngka/nightspots#readme",
   "dependencies": {
     "babel-eslint": "^8.0.0",
+    "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "dotenv": "^4.0.0",
     "eslint": "^4.7.2",

@@ -13,7 +13,6 @@ function initiateGoingButtons() {
         // for now link to goingcount for testing
         var yelpid = button.getAttribute("yelpid");
         var url = window.location.origin + "/api/goingcount?yelpid=" + encodeURIComponent(yelpid);
-        button.href = url;
 
         // ajaxRequest(method, url, payload, callback) defined in common/ajax-request.js
         // eslint-disable-next-line no-undef
@@ -35,8 +34,19 @@ function initiateGoingButtons() {
                     button.innerHTML = "ERROR N/A";
                 }
             }
+        });
 
+        // now that we're done with the look, lets add the logic
+        button.addEventListener("click", function(event) {
+            event.preventDefault();
+            var yelpID = button.getAttribute("yelpid");
+            var url = window.location.origin + "/api/metoo";
+            var payload = {"yelpID": yelpID};
 
+            // eslint-disable-next-line no-undef
+            ajaxRequest("POST", url, payload, function(response){
+                console.log(response);
+            });
         });
     });
 }
