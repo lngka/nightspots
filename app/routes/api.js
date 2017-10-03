@@ -1,8 +1,8 @@
 const path = require("path");
-const searchYELPbyLocation = require(path.join(process.cwd(), "app/controllers/server.searchYELP.js"));
-const searchReviewsByID = require(path.join(process.cwd(), "app/controllers/server.searchReviews.js"));
+const searchYELPbyLocation  = require(path.join(process.cwd(), "app/controllers/server.searchYELP.js"));
+const searchReviewsByID     = require(path.join(process.cwd(), "app/controllers/server.searchReviews.js"));
 const searchYELPwithReviews = require(path.join(process.cwd(), "app/controllers/server.searchYELPwithReviews.js"));
-
+const ensureAuthenticated   = require(path.join(process.cwd(), "app/common/ensure-authenticated.js"));
 module.exports = function(app) {
     app.get("/api/search", function(req, res) {
         var location = req.query.location;
@@ -58,7 +58,7 @@ module.exports = function(app) {
         }
     });
 
-    app.get("/api/goingcount", function(req, res) {
+    app.get("/api/goingcount", ensureAuthenticated, function(req, res) {
         var yelpid = req.query.yelpid;
         if (!yelpid) {
             return res.status(400).send("Request must specify a yelpid in query");
