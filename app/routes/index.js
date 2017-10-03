@@ -5,4 +5,9 @@ module.exports = function(app) {
         };
         res.render("index", options);
     });
+
+    app.get("/success", (req, res) => {
+        console.log(req.session.passport);
+        res.json(req.user);
+    });
 };

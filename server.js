@@ -4,7 +4,9 @@ const mongoose     = require("mongoose");
 const handlebars   = require("express-handlebars");
 const path         = require("path");
 const getYelpToken = require("./app/common/get-yelp-token.js");
-const passport = require("passport");
+const cookieParser = require("cookie-parser");
+const session      = require("express-session");
+const passport     = require("passport");
 
 // init environment variables
 require("dotenv").config();
@@ -24,16 +26,28 @@ app.engine("hbs", handlebars({"extname": "hbs", "layoutsDir": "./views/layouts",
 app.use("/public", express.static(path.join(process.cwd(), "public")));
 app.use("/app", express.static(path.join(process.cwd(), "app")));
 
+// init cookie parser and session
+app.use(cookieParser("sup2erdu21per1836&secret"));
+app.use(session({
+    "resave": false,
+    "saveUninitialized": false,
+    "secret": "sup2erdu21per1836&secret"
+}));
+
+// config passportJS
+app.use(passport.initialize());
+app.use(passport.session());
+require("./app/config/passport-config.js")(passport);
+
 // routes config
 require("./app/routes/index.js")(app);
 require("./app/routes/api.js")(app);
-require("./app/routes/auth.js")(app);
+require("./app/routes/auth.js")(app, passport);
 
 
 // start, default PORT is 3000
 app.listen(process.env.PORT || 3000, function() {
     console.log("Listening on " + process.env.PORT || 3000);
-
     // get access token from YELP and save in process.env.YELP_TOKEN
     getYelpToken();
 });
