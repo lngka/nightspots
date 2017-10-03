@@ -27,7 +27,6 @@ module.exports = function addGoingCountByUserID(userID, yelpID, callback) {
         function (err, doc) {
             if (err) return callback(err, null);
             return callback(null, doc);
-
         }
     );
 };
