@@ -7,7 +7,7 @@ const Business = require(path.join(process.cwd(), "/app/models/business.js"));
 * @param yelpID {string}: business ID string provided by YELP
 * @param callback {function}: will be passed (err, doc)
 *   @callback-arg err {Error}: most likely error from mongoose
-*   @callback-arg doc {object}: JSON object with the new goingCount
+*   @callback-arg doc {object}: JSON object with the old goingCount
 */
 module.exports = function addGoingCountByUserID(userID, yelpID, callback) {
     Business.findOneAndUpdate(

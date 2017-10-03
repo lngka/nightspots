@@ -21,32 +21,16 @@ function initiateGoingButtons() {
                 var userID = document.querySelector("#user").innerHTML;
                 var yelpID = button.getAttribute("yelpid");
                 var url = window.location.origin + "/api/metoo";
-                var payload = {"yelpID": yelpID};
+                var payload = {"yelpID": yelpID, "userID": userID};
                 // eslint-disable-next-line no-undef
-                ajaxRequest("POST", url, payload, function(response){
-                    console.log(response);
+                ajaxRequest("POST", url, payload, function(){
                     updateButtonLabel(button);
                 });
             } catch (e) {
                 // redirect to login otherwise
-                var url = window.location.origin + "/auth/twitter";
-                window.location.assign(url);
+                var loginURL = window.location.origin + "/auth/twitter";
+                window.location.assign(loginURL);
             }
-
-            // if (userID) {
-            //     var yelpID = button.getAttribute("yelpid");
-            //     var url = window.location.origin + "/api/metoo";
-            //     var payload = {"yelpID": yelpID};
-            //     // eslint-disable-next-line no-undef
-            //     ajaxRequest("POST", url, payload, function(response){
-            //         console.log(response);
-            //         updateButtonLabel(button);
-            //     });
-            // } else {
-            //     // redirect to login otherwise
-            //     var url = window.location.origin + "/auth/twitter";
-            //     window.location.assign(url);
-            // }
         });
     });
 }

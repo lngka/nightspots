@@ -14,6 +14,10 @@ const mySchema = new Schema({
         "token": String,
         "tokenSecret": String,
         "accessLevel": String
+    },
+    "lastSearchedLocation": {
+        "type": String,
+        "default": ""
     }
 });
 

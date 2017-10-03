@@ -5,6 +5,7 @@ const searchYELPwithReviews = require(path.join(process.cwd(), "app/controllers/
 const ensureAuthenticated   = require(path.join(process.cwd(), "app/common/ensure-authenticated.js"));
 const goingCountByID        = require(path.join(process.cwd(), "app/controllers/server.goingCountByID.js"));
 const addGoingCountByUserID   = require(path.join(process.cwd(), "app/controllers/server.addGoingCountByUserID.js"));
+const saveLastSeachedLocation = require(path.join(process.cwd(), "app/controllers/server.saveLastSeachedLocation.js"));
 
 module.exports = function(app) {
     app.get("/api/search", function(req, res) {
@@ -55,12 +56,18 @@ module.exports = function(app) {
                 if (err) {
                     return res.status(500).json({"error": err.message});
                 } else {
+                    if (req.isAuthenticated()) {
+                        saveLastSeachedLocation(req.user.id, location, function(err) {
+                            console.log(err);
+                        });
+                    }
                     return res.status(200).json({"businesses": businesses});
                 }
             });
         }
     });
 
+    // return the goingcount of the yelpid in query
     app.get("/api/goingcount", function(req, res) {
         var yelpid = req.query.yelpid;
         if (!yelpid) {
@@ -78,7 +85,10 @@ module.exports = function(app) {
 
     app.post("/api/metoo", ensureAuthenticated, function(req, res) {
         var yelpID = req.body.yelpID;
-        var userID = req.user.id;
+        var userID = req.body.userID;
+        if (userID !== req.user.id) {
+            return res.status(401).send("User not logged in server");
+        }
         addGoingCountByUserID(userID, yelpID, function(err, doc) {
             if (err) return res.status(500).send(err.message);
             res.status(200).json(doc);
