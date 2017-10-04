@@ -93,7 +93,7 @@ function newResultCard() {
 */
 function newDOMElement(type, attributes) {
     if(!type) {
-        var err = new Error("Couldn't create DOM element");
+        var err = new Error("Couldn't create DOM element, invalid 'type' argument");
         throw err;
     }
     var el = document.createElement(type);

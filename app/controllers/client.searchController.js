@@ -8,11 +8,12 @@ onDOMready(function() {
         event.preventDefault();
 
         //"searchForm", "searchField"
-        // are ids of a <form> and a <input>, check index.hbs for more
+        // are ids of a <form> and a <input> in index.hbs
         var location = document.forms.searchForm.searchField.value;
         if (!location) {
-            return alert("Please specify a location");
+            return alert("Please specify a location!");
         }
+
 
         displayNightspotsByLocation(location, function(err) {
             if (err) {
@@ -28,14 +29,18 @@ onDOMready(function() {
 *   @callback-argument err {error}: thrown when findBusinessesByLocation fails
 */
 function displayNightspotsByLocation(location, callback) {
+
+    var resultDiv = document.querySelector("#resultDiv");
+    loadingScreenStart();
+
     findBusinessesByLocation(location, function(err, businesses) {
         if (err) {
+            loadingScreenStop(resultDiv);
             return callback(err);
         }
 
-        var resultDiv = document.querySelector("#resultDiv");
         // showSearchResult(parentDiv, businesses)
-        loadingScreen(resultDiv);
+        loadingScreenStop(resultDiv);
         showSearchResult(resultDiv, businesses); // client.showSearchResult.js
         initiateGoingButtons(); //app/controllers/client.goingButton.js
 
@@ -76,6 +81,16 @@ function findBusinessesByLocation(location, callback) {
 /*
 * clear old result and display loading screen
 */
-function loadingScreen(resultDiv) {
+function loadingScreenStart() {
+    var loadingDiv = document.querySelector("#loadingDiv");
+    loadingDiv.classList.remove("hidden");
+    submitBtn.disabled = true;
+    submitBtn.classList.add("btn-danger");
+}
+function loadingScreenStop(resultDiv) {
+    var loadingDiv = document.querySelector("#loadingDiv");
+    loadingDiv.classList.add("hidden");
     resultDiv.innerHTML = "";
+    submitBtn.disabled = false;
+    submitBtn.classList.remove("btn-danger");
 }
