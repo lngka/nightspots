@@ -4,11 +4,14 @@
 */
 //eslint-disable-next-line no-undef
 onDOMready(function() {
-    try {
+    try { //if user is logged in
         var location = document.querySelector("#lastSearchedLocation").innerHTML;
         var searchField = document.querySelector("#searchField");
         searchField.value = location;
-        document.forms[0].submit();
+        //eslint-disable-next-line no-undef
+        displayNightspotsByLocation(location, function(err) {// defined in client.searchController.js
+            if (err) alert(err.message);
+        });
     } catch (e) {
         return console.log(e);
     }
