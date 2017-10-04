@@ -4,15 +4,25 @@
 */
 //eslint-disable-next-line no-undef
 onDOMready(function() {
+    let searchField = document.querySelector("#searchField");
+
     try { //if user is logged in
-        var location = document.querySelector("#lastSearchedLocation").innerHTML;
-        var searchField = document.querySelector("#searchField");
+        let location = document.querySelector("#lastSearchedLocation").innerHTML;
         searchField.value = location;
         //eslint-disable-next-line no-undef
         displayNightspotsByLocation(location, function(err) {// defined in client.searchController.js
             if (err) alert(err.message);
         });
     } catch (e) {
-        return console.log(e);
+        try { // we may have saved a cookie for this before
+            let location = document.querySelector("#cookieLocation").innerHTML;
+            searchField.value = location;
+            //eslint-disable-next-line no-undef
+            displayNightspotsByLocation(location, function(err) {// defined in client.searchController.js
+                if (err) alert(err.message);
+            });
+        } catch (e) {
+            return console.log(e);
+        }
     }
 });

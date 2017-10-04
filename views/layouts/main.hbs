@@ -21,6 +21,10 @@
       <div id="user" class="hidden">{{user.userID}}</div>
       <div id="lastSearchedLocation" class="hidden">{{user.lastSearchedLocation}}</div>
       {{/if}}
+      {{#if cookieLocation}}
+      <!-- store location saved in cookie here, client js load this location if #lastSearchedLocation fails  -->
+      <div id="cookieLocation" class="hidden">{{cookieLocation}}</div>
+      {{/if}}
 
       <!-- body goes here -->
       <div class="container">

@@ -56,10 +56,15 @@ module.exports = function(app) {
                 if (err) {
                     return res.status(500).json({"error": err.message});
                 } else {
+
+                    // save the location in DB if user is logged in
                     if (req.isAuthenticated()) {
                         saveLastSeachedLocation(req.user.id, location, function(err) {
                             console.log(err);
                         });
+                    } else {
+                        // save as a cookie for others
+                        res.cookie("location", location, {"maxAge": 1000 * 60 * 60 * 24 * 7});
                     }
                     return res.status(200).json({"businesses": businesses});
                 }
