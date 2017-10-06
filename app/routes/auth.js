@@ -7,6 +7,8 @@ module.exports = function(app, passport) {
 
     app.get("/auth/twitter/callback", passport.authenticate("twitter"),
         function(req, res) {
+            // put the lastSearchedLocation from data base into rendered HTML
+            // clientside script will automatically load user's last search
             if (req.isAuthenticated()) {
                 loadLastSearch(req.user.id, function(err, doc){
                     var options = {

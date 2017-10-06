@@ -21,7 +21,6 @@ module.exports = function(app) {
             // render this to help client.loadLastSearch.js
             // this cookie is set in api.js
             options.cookieLocation = (req.cookies.location) ? req.cookies.location : "";
-            console.log(options);
             res.render("index", options);
         }
     });

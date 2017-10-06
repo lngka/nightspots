@@ -17,14 +17,27 @@ function initiateGoingButtons() {
             event.preventDefault();
 
             // #user rendered if user is logged in and contain user ID
+            // this means we mark a business as "going" fot the user
             try {
                 var userID = document.querySelector("#user").innerHTML;
                 var yelpID = button.getAttribute("yelpid");
                 var url = window.location.origin + "/api/metoo";
                 var payload = {"yelpID": yelpID, "userID": userID};
                 // eslint-disable-next-line no-undef
-                ajaxRequest("POST", url, payload, function(){
-                    updateButtonLabel(button);
+                ajaxRequest("POST", url, payload, function(response){
+                    // this route give a "soft" error (meaning with http code 200) when:
+                    // user already marked a business als "going" before
+                    try {
+                        response = JSON.parse(response);
+                        if (response.error) {
+                            alert(response.error);
+                        } else {
+                            updateButtonLabel(button);
+                        }
+                    } catch (e) {
+                        console.log(e);
+                        updateButtonLabel(button); // update the button anyway just to be sure 
+                    }
                 });
             } catch (e) {
                 // redirect to login otherwise
