@@ -20,7 +20,7 @@ module.exports = function searchYELPbyLocation(location, callback) {
         }
     };
 
-    var reqBusinessByLocation = https.request(getbusiness_options, function(response) {
+    var request = https.request(getbusiness_options, function(response) {
         // collect data asyncly
         response.setEncoding("utf8");
         var data = "";
@@ -38,7 +38,7 @@ module.exports = function searchYELPbyLocation(location, callback) {
             }
             // if success, YELP return {"businesses": <array of businesses>}
             if (!data.businesses) {
-                var error = new Error("Couldn't fetch businesses from YELP");
+                var error = new Error("Could not fetch businesses from YELP");
                 return callback(error, null);
             } else {
                 return callback(null, data.businesses);
@@ -50,5 +50,25 @@ module.exports = function searchYELPbyLocation(location, callback) {
         });
     });
 
-    reqBusinessByLocation.end();
+    // set time out to 10sec
+    setTimeout(function() {
+        var timeoutError = new Error("Timed out: invalid search term OR network problem.");
+        timeoutError.code = "ERRORTIMEOUT";
+        request.abort();
+        try {
+            return callback(timeoutError, null);
+        } catch (e) {
+            // because this is a fake timeout mechanism it will always be called
+            // if callback was called due non-timeout events,
+            // e.g. successfully completed request,
+            // no need to call it again
+        }
+    }, 10*1000);
+
+    request.on("error", function(error) {
+        console.log(error.code);
+        console.log(error);
+    });
+
+    request.end();
 };

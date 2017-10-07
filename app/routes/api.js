@@ -25,13 +25,12 @@ module.exports = function(app) {
             var id = review_for;
             searchReviewsByID(id, function(err, reviews) {
                 if (err) {
-                    var errorJSON = {
+                    return res.status(500).json({
                         "error": {
                             "code": err.code,
                             "description": err.message
                         }
-                    };
-                    return res.status(500).json(errorJSON);
+                    });
                 } else {
                     res.status(200).json({"reviews": reviews});
                 }
@@ -41,9 +40,12 @@ module.exports = function(app) {
         if (location && !withReview) {
             searchYELPbyLocation(location, function(err, businesses){
                 if (err) {
-                    console.log(err);
-                    var errorJSON = {"code": err.code, "description": err.message};
-                    res.status(500).json(errorJSON);
+                    return res.status(500).json({
+                        "error": {
+                            "code": err.code,
+                            "description": err.message
+                        }
+                    });
                 } else {
                     // return a json because other routes do
                     res.json({"businesses": businesses});
@@ -54,7 +56,12 @@ module.exports = function(app) {
         if(location && withReview) {
             searchYELPwithReviews(location, function(err, businesses) {
                 if (err) {
-                    return res.status(500).json({"error": err.message});
+                    return res.status(500).json({
+                        "error": {
+                            "code": err.code,
+                            "description": err.message
+                        }
+                    });
                 } else {
 
                     // save the location in DB if user is logged in

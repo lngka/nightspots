@@ -70,7 +70,8 @@ function findBusinessesByLocation(location, callback) {
         }
         // in case of error, server replies with {"error":{"code": "foobar", "description": "barbaz"}}
         if (response.error) {
-            var err = new Error(response.error);
+            var err = new Error(response.error.description);
+            err.code = response.error.code;
             return callback(err, null);
         } else {
             return callback(null, response.businesses);
