@@ -1,17 +1,77 @@
 #greeting {
     margin-top: 2rem;
-    color: white;
+    font-family: monospace;
+    background-color: #D8ECE7;
+}
+#searchField {
+    background-color: #EDE7F6;
+    border-color: purple;
+    color: purple;
 }
 
-.card-title {
-    font-size: 1rem;
-    font-weight: 600;
+#submitBtn{
+    background-color: #EDE7F6;
+    border-color: purple;
+    color: purple;
 }
 
 #loadingDiv {
-    color: white;
+    color: black;
 }
 
+.card {
+    box-shadow: 0px 0px 10px 0px;
+    animation: fadein 1s;
+}
+.card-title {
+    display: block;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    font-family: "Inconsolata", monospace;
+    color: purple;
+}
+
+.card-title:hover {
+    text-decoration: none;
+}
+
+hr {
+    margin-top: 0px;
+}
+
+.card-text {W
+    padding-left: 2%;
+    padding-right: 2%;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.card-footer {
+    padding: 0px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+.btn-going{
+    width: 100%;
+    height: 100%;
+    background-color: #EDE7F6;
+    border-color: purple;
+    border-radius: 0px;
+    color: purple;
+    font-family: "Inconsolata", monospace;
+}
+
+.btn-going:hover {
+    text-decoration: none;
+    background-color: #D8ECE7;
+}
 .hidden {
     display: none;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }

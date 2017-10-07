@@ -61,7 +61,7 @@ function newResultCard() {
 
     var cardFooter = newDOMElement("div", {"class": "card-footer"});
     var footerText = newDOMElement("small");
-    var goingButton = newDOMElement("a", {"class": "btn btn-success btn-going"});// element with btn-going will be impemented with script
+    var goingButton = newDOMElement("a", {"class": "btn btn-going"});// element with btn-going will be impemented with script
     goingButton.href = "#";
     footerText.appendChild(goingButton);
     cardFooter.appendChild(footerText);
