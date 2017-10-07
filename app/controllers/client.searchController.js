@@ -31,7 +31,7 @@ onDOMready(function() {
 function displayNightspotsByLocation(location, callback) {
 
     var resultDiv = document.querySelector("#resultDiv");
-    loadingScreenStart();
+    loadingScreenStart(resultDiv);
 
     findBusinessesByLocation(location, function(err, businesses) {
         if (err) {
@@ -81,9 +81,10 @@ function findBusinessesByLocation(location, callback) {
 /*
 * clear old result and display loading screen
 */
-function loadingScreenStart() {
+function loadingScreenStart(resultDiv) {
     var loadingDiv = document.querySelector("#loadingDiv");
     loadingDiv.classList.remove("hidden");
+    resultDiv.innerHTML = "";
     submitBtn.disabled = true;
     submitBtn.classList.add("btn-danger");
 }

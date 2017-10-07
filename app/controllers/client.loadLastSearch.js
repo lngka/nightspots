@@ -20,11 +20,11 @@ onDOMready(function() {
         try { // even if not logged in...
             let location = document.querySelector("#cookieLocation").innerHTML;
             searchField.value = location;
-        
+
             //there might be a cookie from last user's session
             if (location) {
                 //eslint-disable-next-line no-undef
-                displayNightspotsByLocation(location, function(err) {// defined in client.searchController.js
+                displayNightspotsByLocation(location, function(err) {
                     if (err) alert(err.message);
                 });
             }
