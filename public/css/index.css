@@ -41,9 +41,9 @@ hr {
     margin-top: 0px;
 }
 
-.card-text {W
-    padding-left: 2%;
-    padding-right: 2%;
+.card-text {
+    padding-left: 3%;
+    padding-right: 3%;
     text-align: justify;
     text-justify: inter-word;
 }
@@ -51,16 +51,19 @@ hr {
 .card-footer {
     padding: 0px;
     padding-top: 1px;
-    padding-bottom: 1px;
+    margin-top: 1em;
 }
 .btn-going{
     width: 100%;
     height: 100%;
     background-color: #EDE7F6;
+    background-color: #8e44ad;
+    border-bottom: 4px solid #80399d;
     border-color: purple;
     border-radius: 0px;
-    color: purple;
+    color: white;
     font-family: "Inconsolata", monospace;
+    font-size: 1.2rem;
 }
 
 .btn-going:hover {
