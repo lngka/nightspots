@@ -1,8 +1,10 @@
 #greeting {
     margin-top: 2rem;
-    font-family: monospace;
-    background-color: #D8ECE7;
 }
+
+.text-intro {
+}
+
 #searchField {
     background-color: #EDE7F6;
     border-color: purple;
