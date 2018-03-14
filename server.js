@@ -51,7 +51,5 @@ require("./app/routes/auth.js")(app, passport);
 
 // start, default PORT is 3000
 app.listen(process.env.PORT || 3000, function() {
-    console.log("Listening on " + process.env.PORT || 3000);
-    // get access token from YELP and save in process.env.YELP_TOKEN
-    getYelpToken();
+    console.log("Listening on " + process.env.PORT || 3000);    
 });
